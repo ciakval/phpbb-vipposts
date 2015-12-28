@@ -10,6 +10,7 @@ class listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.phpbb_content_visibility_get_visibility_sql_before'	=> 'limit_vip_posts',
+			'core.permissions'	=> 'add_permissions',
 		);
 	}
 
@@ -26,5 +27,15 @@ class listener implements EventSubscriberInterface
 		}
 
 		return $event;
+	}
+
+	public function add_permissions($event)
+	{
+		$permissions = $event['permissions'];
+
+		$permissions['u_vip_view']	= array('lang'	=> 'ACL_U_VIP_VIEW',	'cat'	=> 'post');
+		$permissions['u_vip_set']	= array('lang'	=> 'ACL_U_VIP_SET',		'cat'	=> 'post');
+
+		$event['permissions'] = $permissions;
 	}
 }
