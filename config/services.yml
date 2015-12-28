@@ -1,5 +1,7 @@
 services:
     ciakval.vipposts.listener:
         class: ciakval\vipposts\event\listener
+        arguments:
+            - @template
         tags:
             - { name: event.listener }
