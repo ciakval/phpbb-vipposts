@@ -34,4 +34,19 @@ class release_0_1_0 extends \phpbb\db\migration\migration
 		);
 	}
 
+	public function update_data()
+	{
+		return array(
+			array('permission.add', array('u_vip_view')),	// View VIP posts ( = be VIP )
+			array('permission.add', array('u_vip_set')),	// Set VIP to on/off ( = be author or mod/admin
+		);
+	}
+
+	public function effectively_installed()
+	{
+		return $this->db_tools->sql_column_exists(
+			$this->table_prefix . 'posts', 'post_vip'
+		);
+	}
+
 }
