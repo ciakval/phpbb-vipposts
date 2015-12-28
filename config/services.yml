@@ -1,0 +1,5 @@
+services:
+    ciakval.vipposts.listener:
+        class: ciakval\vipposts\event\listener
+        tags:
+            - { name: event.listener }
