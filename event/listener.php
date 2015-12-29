@@ -48,6 +48,7 @@ public function __construct(\phpbb\config\config $config, \phpbb\db\driver\drive
 		return array(
 			'core.phpbb_content_visibility_get_visibility_sql_before'	=> 'limit_vip_posts',
 'core.permissions'						=> 'permissions',
+'core.posting_modify_template_vars' => 'posting_button',
 'core.submit_post_modify_sql_data' => 'posting'
 		);
 	}
@@ -63,12 +64,21 @@ public function __construct(\phpbb\config\config $config, \phpbb\db\driver\drive
 		}
 
 	}
+
 	public function permissions($event)
 	{
 	$permissions = $event['permissions'];
 	$permissions['u_vip_view'] = array('lang' => 'ACL_U_VIP_VIEW', 'cat' => 'misc');
 	$permissions['u_vip_set'] = array('lang' => 'ACL_U_VIP_SET', 'cat' => 'misc');
 	$event['permissions'] = $permissions;
+	}
+
+	public function limit_vip_posts($event)
+	{
+$page_data = $event['page_data'];
+$page_data['S_CAN_VIPPOST'] = $this->auth->acl_get('u_vip_post');
+$page_data['S_VIPPOST'] = ""; //checked
+$event['page_data'] = $page_data;
 	}
 	public function posting($event)
 	{
