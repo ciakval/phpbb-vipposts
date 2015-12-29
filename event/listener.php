@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the VIP Posts extension package
+ *
+ * @copyright (C) 2015, Jan Remes
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ * @package ciakval/vipposts/event
+ */
+
 namespace ciakval\vipposts\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,8 +25,9 @@ class listener implements EventSubscriberInterface
 	protected $auth;
 	/** @var \phpbb\user */
 	protected $user;
+	/** @var string */
 	protected $root_path;
-
+	/** @var string */
 	protected $phpEx;
 
 	/**
@@ -51,6 +61,11 @@ class listener implements EventSubscriberInterface
 		$this->phpEx   = $phpEx;
 	}
 
+	/**
+	 * Link handler functions to subscribed events
+	 *
+	 * @return array
+	 */
 	static public function getSubscribedEvents()
 	{
 		return array(
@@ -61,6 +76,11 @@ class listener implements EventSubscriberInterface
 		);
 	}
 
+	/**
+	 * Filter out VIP posts for non-VIP users
+	 *
+	 * @param \phpbb\event\data	$event	Visibility SQL manipulating event
+	 */
 	public function limit_vip_posts($event)
 	{
 		if ($event['mode'] == 'post')
@@ -73,6 +93,11 @@ class listener implements EventSubscriberInterface
 
 	}
 
+	/**
+	 * Add extension permissions to the phpBB permission system
+	 *
+	 * @param \phpbb\event\data	$event	Permission event
+	 */
 	public function permissions($event)
 	{
 		$permissions = $event['permissions'];
@@ -81,6 +106,11 @@ class listener implements EventSubscriberInterface
 		$event['permissions'] = $permissions;
 	}
 
+	/**
+	 * Set template variables to control displaying 'mark as VIP' button
+	 *
+	 * @param \phpbb\event\data	$event	Posting template variables modifying event
+	 */
 	public function posting_button($event)
 	{
 		$page_data = $event['page_data'];
@@ -89,6 +119,11 @@ class listener implements EventSubscriberInterface
 		$event['page_data'] = $page_data;
 	}
 
+	/**
+	 * Propagate 'mark as VIP' post setting to the database
+	 *
+	 * @param \phpbb\event\data	$event	Post submission SQL manipulating event
+	 */
 	public function posting($event)
 	{
 		$sql_data = $event['sql_data'];
