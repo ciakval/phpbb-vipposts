@@ -72,5 +72,10 @@ public function __construct(\phpbb\config\config $config, \phpbb\db\driver\drive
 	}
 	public function posting($event)
 	{
+	$sql_data = $event['sql_data'];
+	$sql_data[POSTS_TABLE]['sql'] = array_merge($sql_data[POSTS_TABLE]['sql'], array(
+'post_vip' => $post_vip
+	);
+	$event['sql_data'] = $sql_data;
 	}
 }
