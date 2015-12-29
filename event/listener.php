@@ -31,6 +31,8 @@ class listener implements EventSubscriberInterface
 	public function permissions($event)
 	{
 	$permissions = $event['permissions'];
-	$permissions['u_vippost'] = array('lang' => 'ACL_U_VIPPOST', 'cat' => 'misc');
+	$permissions['u_vip_view'] = array('lang' => 'ACL_U_VIP_VIEW', 'cat' => 'misc');
+	$permissions['u_vip_set'] = array('lang' => 'ACL_U_VIP_SET', 'cat' => 'misc');
+	$event['permissions'] = $permissions;
 	}
 }
