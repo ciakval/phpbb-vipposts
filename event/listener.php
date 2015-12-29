@@ -6,6 +6,43 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
+	/** @var \phpbb\config\config */	
+	protected $config;
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+	/** @var \phpbb\template\template */
+	protected $template;
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+	/** @var \phpbb\user */
+	protected $user;
+	protected $root_path;
+	
+	protected $phpEx;
+/** 
+ 	* Constructor 
+ 	* 
+ 	* @param \phpbb\config\config   		$config             	 Config object 
+ 	* @param \phpbb\db\driver\driver_interface      $db        	 	 DB object 
+ 	* @param \phpbb\template\template    		$template  	 	 Template object 
+ 	* @param \phpbb\auth\auth      			$auth           	 Auth object 
+ 	* @param \phpbb\use		     		$user           	 User object 
+ 	* @param	                		$root_path          	 Root Path object 
+ 	* @param                  	     		$phpEx          	 phpEx object 
+ 	* @return \staffit\toptentopics\event\listener 
+ 	* @access public 
+ 	*/ 
+public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\template\template $template, \phpbb\auth\auth $auth, \phpbb\user $user, $root_path, $phpEx) 
+{
+   $this->config = $config;
+   $this->db = $db;
+   $this->template = $template; 
+   $this->auth = $auth;
+   $this->user = $user;
+   $this->root_path = $root_path;
+   $this->phpEx   = $phpEx ;
+}
+
 	static public function getSubscribedEvents()
 	{
 		return array(
@@ -16,17 +53,14 @@ class listener implements EventSubscriberInterface
 
 	public function limit_vip_posts($event)
 	{
-		global $auth;
-
 		if ($event['mode'] == 'post')
 		{
-			if ($auth->acl_get('!u_vip_view'))
+			if ($this->auth->acl_get('!u_vip_view'))
 			{
 				$event['where_sql'] = 'p.post_vip = 0 AND ';
 			}
 		}
 
-		return $event;
 	}
 	public function permissions($event)
 	{
