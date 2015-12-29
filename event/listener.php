@@ -17,17 +17,21 @@ class listener implements EventSubscriberInterface
 {
 	/** @var \phpbb\auth\auth */
 	protected $auth;
+	/** @var \phpbb\user */
+	protected $user;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\auth\auth			$auth		Auth object
+	 * @param \phpbb\auth\auth	$auth	Auth object
+	 * @param \phpbb\user		$user	User object
 	 * @return \ciakval\vipposts\event\listener
 	 * @access public
 	 */
-	public function __construct(\phpbb\auth\auth $auth)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\user $user)
 	{
 		$this->auth = $auth;
+		$this->user = $user;
 	}
 
 	/**
@@ -83,6 +87,9 @@ class listener implements EventSubscriberInterface
 	 */
 	public function posting_button($event)
 	{
+		// Set button text
+		$this->user->add_lang_ext('ciakval/vipposts', 'common');
+
 		$page_data = $event['page_data'];
 		$page_data['S_CAN_VIPPOST'] = $this->auth->acl_get('u_vip_post');
 		$page_data['S_VIPPOST'] = ""; //checked

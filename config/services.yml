@@ -3,5 +3,6 @@ services:
         class: ciakval\vipposts\event\listener
         arguments:
             - @auth
+            - @user
         tags:
             - { name: event.listener }
