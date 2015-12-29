@@ -15,50 +15,19 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-	/** @var \phpbb\config\config */
-	protected $config;
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
-	/** @var \phpbb\template\template */
-	protected $template;
 	/** @var \phpbb\auth\auth */
 	protected $auth;
-	/** @var \phpbb\user */
-	protected $user;
-	/** @var string */
-	protected $root_path;
-	/** @var string */
-	protected $phpEx;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\config\config   		$config             	 Config object
-	 * @param \phpbb\db\driver\driver_interface      $db        	 	 DB object
-	 * @param \phpbb\template\template    		$template  	 	 Template object
-	 * @param \phpbb\auth\auth      			$auth           	 Auth object
-	 * @param \phpbb\use		     		$user           	 User object
-	 * @param	                		$root_path          	 Root Path object
-	 * @param                  	     		$phpEx          	 phpEx object
+	 * @param \phpbb\auth\auth			$auth		Auth object
 	 * @return \ciakval\vipposts\event\listener
 	 * @access public
 	 */
-	public function __construct(
-		\phpbb\config\config $config,
-		\phpbb\db\driver\driver_interface $db,
-		\phpbb\template\template $template,
-		\phpbb\auth\auth $auth,
-		\phpbb\user $user,
-		$root_path,
-		$phpEx)
+	public function __construct(\phpbb\auth\auth $auth)
 	{
-		$this->config = $config;
-		$this->db = $db;
-		$this->template = $template;
 		$this->auth = $auth;
-		$this->user = $user;
-		$this->root_path = $root_path;
-		$this->phpEx   = $phpEx;
 	}
 
 	/**
@@ -127,6 +96,8 @@ class listener implements EventSubscriberInterface
 	 */
 	public function posting($event)
 	{
+		$post_vip = request_var('vippost', false);
+
 		$sql_data = $event['sql_data'];
 		$sql_data[POSTS_TABLE]['sql'] = array_merge($sql_data[POSTS_TABLE]['sql'], array(
 			'post_vip' => $post_vip,
