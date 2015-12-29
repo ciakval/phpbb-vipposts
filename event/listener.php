@@ -73,7 +73,7 @@ public function __construct(\phpbb\config\config $config, \phpbb\db\driver\drive
 	$event['permissions'] = $permissions;
 	}
 
-	public function limit_vip_posts($event)
+	public function posting_button($event)
 	{
 $page_data = $event['page_data'];
 $page_data['S_CAN_VIPPOST'] = $this->auth->acl_get('u_vip_post');
