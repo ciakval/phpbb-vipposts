@@ -47,7 +47,8 @@ public function __construct(\phpbb\config\config $config, \phpbb\db\driver\drive
 	{
 		return array(
 			'core.phpbb_content_visibility_get_visibility_sql_before'	=> 'limit_vip_posts',
-			'core.permissions'						=> 'permissions'
+'core.permissions'						=> 'permissions',
+'core.submit_post_modify_sql_data' => 'posting'
 		);
 	}
 
@@ -68,5 +69,8 @@ public function __construct(\phpbb\config\config $config, \phpbb\db\driver\drive
 	$permissions['u_vip_view'] = array('lang' => 'ACL_U_VIP_VIEW', 'cat' => 'misc');
 	$permissions['u_vip_set'] = array('lang' => 'ACL_U_VIP_SET', 'cat' => 'misc');
 	$event['permissions'] = $permissions;
+	}
+	public function posting($event)
+	{
 	}
 }
