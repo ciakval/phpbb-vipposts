@@ -40,6 +40,14 @@ class release_0_1_0 extends \phpbb\db\migration\migration
 			array('permission.add', array('u_vip_view')),	// View VIP posts ( = be VIP )
 			array('permission.add', array('u_vip_post')),	// Mark posts as VIP
 			array('permission.add', array('u_vip_set')),	// Set VIP to on/off ( = be author or mod/admin
+
+			array('permission.permission_set', array('ADMINISTRATORS', 'u_vip_view', 'group')),
+			array('permission.permission_set', array('ADMINISTRATORS', 'u_vip_set', 'group')),
+			array('permission.permission_set', array('ADMINISTRATORS', 'u_vip_post', 'group')),
+
+			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_view', 'group')),
+			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_set', 'group')),
+			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_post', 'group')), 		
 		);
 	}
 
