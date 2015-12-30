@@ -19,19 +19,22 @@ class listener implements EventSubscriberInterface
 	protected $auth;
 	/** @var \phpbb\user */
 	protected $user;
-
+	/** @var \phpbb\request\request */
+	protected $request;
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\auth\auth	$auth	Auth object
 	 * @param \phpbb\user		$user	User object
+ 	 * @param \phpbb\request\request$requestRequest object 
 	 * @return \ciakval\vipposts\event\listener
 	 * @access public
 	 */
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\user $user)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\user $user, \phpbb\request\request $request)
 	{
 		$this->auth = $auth;
 		$this->user = $user;
+		$this->request = $request;
 	}
 
 	/**
@@ -104,7 +107,7 @@ class listener implements EventSubscriberInterface
 	 */
 	public function posting($event)
 	{
-		$post_vip = request_var('vippost', false);
+		$post_vip = $this->request->variable('vippost', 0);
 
 		$sql_data = $event['sql_data'];
 		$sql_data[POSTS_TABLE]['sql'] = array_merge($sql_data[POSTS_TABLE]['sql'], array(
