@@ -107,7 +107,7 @@ class listener implements EventSubscriberInterface
 	 */
 	public function posting($event)
 	{
-		$post_vip = $this->request->variable('vippost', 0);
+		$post_vip = $this->request->variable('vippost', false);
 
 		$sql_data = $event['sql_data'];
 		$sql_data[POSTS_TABLE]['sql'] = array_merge($sql_data[POSTS_TABLE]['sql'], array(
