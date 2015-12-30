@@ -92,7 +92,8 @@ class listener implements EventSubscriberInterface
 
 		$page_data = $event['page_data'];
 		$page_data['S_CAN_VIPPOST'] = $this->auth->acl_get('u_vip_post');
-		$page_data['S_VIPPOST'] = ""; //checked
+		if($event['post_data']['post_vip']) $c='checked="checked"'; else $c="";
+		$page_data['S_VIPPOST'] = $c; //checked
 		$event['page_data'] = $page_data;
 	}
 
