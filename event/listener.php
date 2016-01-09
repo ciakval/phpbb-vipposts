@@ -45,11 +45,28 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
+			'core.user_setup'	=> 'load_lang',
 			'core.phpbb_content_visibility_get_visibility_sql_before'	=> 'limit_vip_posts',
 			'core.permissions'					=> 'permissions',
 			'core.posting_modify_template_vars'	=> 'posting_button',
 			'core.submit_post_modify_sql_data'	=> 'posting'
 		);
+	}
+
+	/**
+	 * Load extension language files
+	 *
+	 * @param \phpbb\event\data $event	User setup event
+	 */
+	public function load_lang($event)
+	{
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = array(
+			'ext_name'	=> 'ciakval/vipposts',
+			'lang_set'	=> 'common'
+		);
+
+		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
 	/**
