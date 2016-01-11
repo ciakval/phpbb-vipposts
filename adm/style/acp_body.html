@@ -1,0 +1,31 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- VIP Posts Extension start -->
+<h1>{L_SETTINGS}</h1>
+
+<form id="acp_board" method="post" action="{U_ACTION}">
+	<fieldset>
+		<dl>
+			<dt><label for="vipposts_highlight">{L_ACP_VIPPOSTS_HIGHLIGHT}</label></dt>
+			<dd>
+				<input type="radio" class="radio" name="vipposts_highlight" value="true" <!-- IF S_HIGHLIGHT -->checked="checked"<!-- ENDIF -->/> {L_YES}
+				&nbsp;
+				<input type="radio" class="radio" name="vipposts_highlight" value="false" <!-- IF not S_HIGHLIGHT -->checked="checked"<!-- ENDIF -->/> {L_NO}
+			</dd>
+		</dl>
+
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />
+			&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</p>
+
+		{S_FORM_TOKEN}
+	</fieldset>
+</form>
+
+				
+
+<!-- VIP Posts extension end -->
+
+<!-- INCLUDE overall_footer.html -->

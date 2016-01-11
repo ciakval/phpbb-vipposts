@@ -47,7 +47,24 @@ class release_0_1_0 extends \phpbb\db\migration\migration
 
 			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_view', 'group')),
 			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_set', 'group')),
-			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_post', 'group')), 		
+			array('permission.permission_set', array('GLOBAL_MODERATORS', 'u_vip_post', 'group')),
+
+			array('config.add', array('vipposts_highlight', false)),
+
+			array('module.add', array(
+				'acp',
+				'ACP_CAT_DOT_MODS',
+				'ACP_VIPPOSTS_TITLE'
+			)),
+
+			array('module.add', array(
+				'acp',
+				'ACP_VIPPOSTS_TITLE',
+				array(
+					'module_basename'	=> '\ciakval\vipposts\acp\main_module',
+					'modes'				=> array('settings'),
+				),
+			)),
 		);
 	}
 
