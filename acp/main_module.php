@@ -1,7 +1,20 @@
 <?php
+/**
+ * This file is part of the VIP Posts extension package
+ *
+ * @copyright	(c) 2016 Honza Remes
+ * @license		GNU General Public license, version 2 (GPL-2.0)
+ *
+ * @package		ciakval/vipposts/acp
+ */
 
 namespace ciakval\vipposts\acp;
 
+/**
+ * Module class for the extension's ACP page
+ *
+ * Support for more settings - check out lines designated with // @more
+ */
 class main_module
 {
 	/* @var string	Action -- this variable is required */
@@ -16,8 +29,8 @@ class main_module
 	{
 		global $request, $user, $config, $template;
 
-		$this->tpl_name = 'acp_body';
-		$this->page_title = $user->lang('ACP_VIPPOSTS_TITLE');
+		$this->tpl_name = 'acp_body';	// Set template name
+		$this->page_title = $user->lang('ACP_VIPPOSTS_TITLE');	// Set page title
 
 		add_form_key('ciakval/vipposts');
 
@@ -31,6 +44,7 @@ class main_module
 
 			// Configuration for highlighting only, others may be added here
 			$config->set('vipposts_highlight', $request->variable('vipposts_highlight', 0));
+			// @more	Save configuration values from the form
 
 			trigger_error($user->lang('ACP_VIPPOSTS_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
@@ -38,6 +52,7 @@ class main_module
 		$template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
 			'S_HIGHLIGHT'	=> $config['vipposts_highlight'],
+			// @more	Specify template variables corresponding to current settings
 		));
 	}
 }
