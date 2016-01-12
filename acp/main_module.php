@@ -30,7 +30,7 @@ class main_module
 			}
 
 			// Configuration for highlighting only, others may be added here
-			$config->set('vipposts_highlight', $request->variable('vipposts_highlight', false));
+			$config->set('vipposts_highlight', $request->variable('vipposts_highlight', 0));
 
 			trigger_error($user->lang('ACP_VIPPOSTS_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
