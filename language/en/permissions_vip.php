@@ -8,6 +8,11 @@
  * @package ciakval/vipposts/language
  */
 
+if (!defined('IN_PHPBB'))
+{
+   exit;
+}
+
 $lang = array_merge($lang, array(
 	'ACL_U_VIP_VIEW'	=> 'Can view VIP posts',
 	'ACL_U_VIP_POST'	=> 'Can post VIP posts',

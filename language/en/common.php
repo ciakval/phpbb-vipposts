@@ -8,6 +8,10 @@
  * @package ciakval/vipposts/language
  */
 
+if (!defined('IN_PHPBB'))
+{
+   exit;
+}
 
 $lang = array_merge($lang, array(
 	'POSTING_BUTTON'	=> 'Mark post as VIP',
