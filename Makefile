@@ -17,7 +17,7 @@ USED = acp \
 	   config \
 	   event \
 	   language \
-	   LICENSE \
+	   license.txt \
 	   migrations \
 	   styles
 
