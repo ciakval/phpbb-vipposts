@@ -3,7 +3,7 @@
 /**
  * This file is part of the VIP Posts extension package
  *
- * @copyright (C) 2015, Jan Remes
+ * @copyright (c) 2016, Honza Remes
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  * @package ciakval/vipposts/event
@@ -127,8 +127,10 @@ class listener implements EventSubscriberInterface
 
 		$page_data = $event['page_data'];
 		$page_data['S_CAN_VIPPOST'] = $this->auth->acl_get('u_vip_post');
-		if($event['post_data']['post_vip']) $c='checked="checked"'; else $c="";
-		$page_data['S_VIPPOST'] = $c; //checked
+		if ($event['post_data']['post_vip'])
+		{
+			$page_data['S_VIPPOST'] = 'checked="checked"';
+		}
 		$event['page_data'] = $page_data;
 	}
 
