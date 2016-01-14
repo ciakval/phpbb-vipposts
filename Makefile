@@ -22,9 +22,9 @@ all: pack
 
 pack:
 	$(MAKE) clean
-	mkdir -p ext/ciakval/vipposts
-	cp -r $(USED) ext/ciakval/vipposts
-	zip -r $(ZIPNAME) ext
+	mkdir -p ciakval/vipposts
+	cp -r $(USED) ciakval/vipposts
+	zip -r $(ZIPNAME) ciakval
 
 clean:
-	rm -rf ext $(ZIPNAME)
+	rm -rf ciakval $(ZIPNAME)
