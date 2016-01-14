@@ -65,6 +65,47 @@ class release_0_1_0 extends \phpbb\db\migration\migration
 					'modes'				=> array('settings'),
 				),
 			)),
+
+			array('permission.role_add', array('VIP_USERS', 'u_', 'VIPPOSTS_VIP_USERS')),
+
+
+			// Give VIP users STANDARD_USER permissions plus VIP permissions (see down there)
+			array('permission.permission_set', array(
+				'VIP_USERS',
+				array(
+					'u_',
+					'u_attach',
+					'u_chgavatar',
+					'u_chgcensors',
+					'u_chgemail',
+					'u_chgpasswd',
+					'u_chgprofileinfo',
+					'u_download',
+					'u_hideonline',
+					'u_masspm',
+					'u_masspm_group',
+					'u_pm_attach',
+					'u_pm_bbcode',
+					'u_pm_delete',
+					'u_pm_download',
+					'u_pm_edit',
+					'u_pm_emailpm',
+					'u_pm_img',
+					'u_pm_printpm',
+					'u_pm_smilies',
+					'u_readpm',
+					'u_savedrafts',
+					'u_search',
+					'u_sendemail',
+					'u_sendim',
+					'u_sendpm',
+					'u_sig',
+					'u_viewprofile',
+					'u_vip_view',	// These lines are why we do this
+					'u_vip_post',	// ^^
+				),
+				'role'
+			)),
 		);
 	}
 
