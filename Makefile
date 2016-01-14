@@ -1,3 +1,8 @@
+# This file is part of the VIP Posts extension package
+#
+# @copyright	(c) 2016, Honza Remes
+# @license		GNU General Public License, version 2 (GPL-2.0)
+#
 # File:		Makefile
 # Author:	Honza Remes (xremes00@stud.fit.vutbr.cz)
 # Project:	VIP Posts

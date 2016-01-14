@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of the VIP Posts extension package
  *
