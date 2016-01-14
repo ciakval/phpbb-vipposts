@@ -5,5 +5,7 @@ services:
             - @auth
             - @user
             - @request
+            - @template
+            - @config
         tags:
             - { name: event.listener }

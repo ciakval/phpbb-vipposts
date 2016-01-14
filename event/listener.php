@@ -21,20 +21,32 @@ class listener implements EventSubscriberInterface
 	protected $user;
 	/** @var \phpbb\request\request */
 	protected $request;
+	/** @var \phpbb\template\template */
+	protected $template;
+	/** @var \phpbb\config\config */
+	protected $config;
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\auth\auth	$auth	Auth object
-	 * @param \phpbb\user		$user	User object
- 	 * @param \phpbb\request\request$requestRequest object 
+	 * @param \phpbb\auth\auth			$auth		Auth object
+	 * @param \phpbb\user				$user		User object
+	 * @param \phpbb\request\request	$request	Request object 
+	 * @param \phpbb\template\template	$template	Page template
 	 * @return \ciakval\vipposts\event\listener
 	 * @access public
 	 */
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\user $user, \phpbb\request\request $request)
+	public function __construct(
+		\phpbb\auth\auth $auth,
+		\phpbb\user $user,
+		\phpbb\request\request $request,
+		\phpbb\template\template $template,
+		\phpbb\config\config $config)
 	{
 		$this->auth = $auth;
 		$this->user = $user;
 		$this->request = $request;
+		$this->template = $template;
+		$this->config = $config;
 	}
 
 	/**
@@ -49,7 +61,10 @@ class listener implements EventSubscriberInterface
 			'core.phpbb_content_visibility_get_visibility_sql_before'	=> 'limit_vip_posts',
 			'core.permissions'					=> 'permissions',
 			'core.posting_modify_template_vars'	=> 'posting_button',
-			'core.submit_post_modify_sql_data'	=> 'posting'
+			'core.submit_post_modify_sql_data'	=> 'posting',
+			'core.viewtopic_assign_template_vars_before'	=> 'set_highlight',
+			'core.viewtopic_post_rowset_data'	=> 'add_highlight',
+			'core.viewtopic_modify_post_row'	=> 'push_highlight',
 		);
 	}
 
@@ -132,5 +147,39 @@ class listener implements EventSubscriberInterface
 		));
 
 		$event['sql_data'] = $sql_data;
+	}
+
+	/**
+	 * Propagate highlight settings to the template
+	 *
+	 * @param \phpbb\event\data $event	Early viewtopic event
+	 */
+	public function set_highlight($event)
+	{
+		$this->template->assign_var('S_VIPPOSTS_HIGHLIGHT', $this->config['vipposts_highlight']);
+	}
+
+	/**
+	 * Store the content of the DB 'post_vip' field in the rowset
+	 *
+	 * @param \phpbb\event\data $event	Post Rowset viewtopic event
+	 */
+	public function add_highlight($event)
+	{
+		$rowset = $event['rowset_data'];
+		$rowset['post_vip'] = $event['row']['post_vip'];
+		$event['rowset_data'] = $rowset;
+	}
+
+	/**
+	 * Push the 'post_vip' field data from the rowset to the template
+	 *
+	 * @param \phpbb\event\data $event	Modify Post Row viewtopic event
+	 */
+	public function push_highlight($event)
+	{
+		$post_row = $event['post_row'];
+		$post_row['POST_VIP'] = $event['row']['post_vip'];
+		$event['post_row'] = $post_row;
 	}
 }
