@@ -3,7 +3,7 @@
 /**
  * This file is part of the VIP Posts extension package
  *
- * @copyright	(c) 2016 Honza Remes
+ * @copyright	(c) 2016, Honza Remes
  * @license		GNU General Public License, version 2 (GPL-2.0)
  *
  * @package 	ciakval/vipposts/acp
@@ -16,6 +16,9 @@ namespace ciakval\vipposts\acp;
  */
 class main_info
 {
+	/**
+	 * Return array with module description
+	 */
 	public function module()
 	{
 		return array(
