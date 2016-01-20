@@ -64,6 +64,8 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_assign_template_vars_before'	=> 'set_highlight',
 			'core.viewtopic_post_rowset_data'	=> 'add_highlight',
 			'core.viewtopic_modify_post_row'	=> 'push_highlight',
+			'core.search_modify_tpl_ary'		=> 'search_set_highlight',
+			'core.search_modify_rowset'			=> 'set_highlight',
 		);
 	}
 
@@ -154,6 +156,7 @@ class listener implements EventSubscriberInterface
 	 * Propagate highlight settings to the template
 	 *
 	 * @param \phpbb\event\data $event	Early viewtopic event
+	 * 									Early search event
 	 */
 	public function set_highlight($event)
 	{
@@ -182,5 +185,20 @@ class listener implements EventSubscriberInterface
 		$post_row = $event['post_row'];
 		$post_row['POST_VIP'] = $event['row']['post_vip'];
 		$event['post_row'] = $post_row;
+	}
+
+	/**
+	 * Push the 'post_vip' field data from the row to the template
+	 *
+	 * @param \phpbb\event\data $event	Search Modify tpl_ary event
+	 */
+	public function search_set_highlight($event)
+	{
+		if ($event['show_results'] == 'posts')
+		{
+			$tpl_ary = $event['tpl_ary'];
+			$tpl_ary['POST_VIP'] = $event['row']['post_vip'];
+			$event['tpl_ary'] = $tpl_ary;
+		}
 	}
 }
