@@ -44,8 +44,9 @@ class main_module
 
 			// Configuration for highlighting only, others may be added here
 			$config->set('vipposts_highlight', $request->variable('vipposts_highlight', 0));
-			$db->sql_query("UPDATE ". CONFIG_TEXT_TABLE ." SET config_value = \"".$request->variable('vipposts_text', '', true)."\"
-WHERE config_name = 'vipposts_text'");
+			$db->sql_query("UPDATE ". CONFIG_TEXT_TABLE ."
+			SET config_value = \"".$request->variable('vipposts_text', '', true)."\"
+			WHERE config_name = 'vipposts_text'");
 			// @more	Save configuration values from the form
 
 			trigger_error($user->lang('ACP_VIPPOSTS_SETTINGS_SAVED') . adm_back_link($this->u_action));
@@ -63,6 +64,5 @@ WHERE config_name = 'vipposts_text'");
 		));
 	}
 }
-
 
 
