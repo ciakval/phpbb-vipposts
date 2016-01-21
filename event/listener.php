@@ -184,6 +184,17 @@ class listener implements EventSubscriberInterface
 	{
 		$post_row = $event['post_row'];
 		$post_row['POST_VIP'] = $event['row']['post_vip'];
+
+		//post text
+		$query = $this->db->sql_query("SELECT config_value
+		FROM ". CONFIG_TEXT_TABLE ."
+		WHERE config_name = 'vipposts_text'");
+		$ris = $this->db->sql_fetchrow($query);
+		$text = $ris['config_value'];
+
+
+
+
 		$event['post_row'] = $post_row;
 	}
 
