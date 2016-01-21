@@ -24,6 +24,8 @@ class listener implements EventSubscriberInterface
 	protected $template;
 	/** @var \phpbb\config\config */
 	protected $config;
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
 	/**
 	 * Constructor
 	 *
@@ -39,13 +41,15 @@ class listener implements EventSubscriberInterface
 		\phpbb\user $user,
 		\phpbb\request\request $request,
 		\phpbb\template\template $template,
-		\phpbb\config\config $config)
+		\phpbb\config\config $config,
+		\phpbb\db\driver\driver_interface $db)
 	{
 		$this->auth = $auth;
 		$this->user = $user;
 		$this->request = $request;
 		$this->template = $template;
 		$this->config = $config;
+		$this->db = $db;
 	}
 
 	/**
