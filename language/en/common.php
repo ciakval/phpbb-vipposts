@@ -18,5 +18,6 @@ $lang = array_merge($lang, array(
 	'ACP_VIPPOSTS_TITLE'			=> 'VIP Posts Module',
 	'ACP_VIPPOSTS'					=> 'Settings',
 	'ACP_VIPPOSTS_HIGHLIGHT'		=> 'Highlight VIP posts?',
+	'ACP_VIPPOSTS_TEXT'		=> 'Text of posts',
 	'ACP_VIPPOSTS_SETTINGS_SAVED'	=> 'Settings saved successfully!',
 ));
