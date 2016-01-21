@@ -195,10 +195,12 @@ class listener implements EventSubscriberInterface
 		WHERE config_name = 'vipposts_text'");
 		$ris = $this->db->sql_fetchrow($query);
 		$text = $ris['config_value'];
-
-
-
-
+		$message = $post_row['MESSAGE'];
+		if($event['row']['post_vip'])
+			{
+			$message = $text;
+			}
+		$post_row['MESSAGE'] = $message;
 		$event['post_row'] = $post_row;
 	}
 
