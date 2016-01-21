@@ -49,9 +49,14 @@ class main_module
 			trigger_error($user->lang('ACP_VIPPOSTS_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
 
+		$query = $db->sql_query("SELECT config_value FROM ". CONFIG_TEXT_TABLE ."
+WHERE config_name = 'vipposts_text'");
+		$ris = $db->sql_fetchrow($query);
+		$text = $ris['config_value'];
 		$template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
 			'S_HIGHLIGHT'	=> $config['vipposts_highlight'],
+			'S_TEXT'	=> $text,
 			// @more	Specify template variables corresponding to current settings
 		));
 	}
