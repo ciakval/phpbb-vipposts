@@ -16,14 +16,14 @@ class release_0_1_1 extends \phpbb\db\migration\migration
 	static public function depends_on()
 	{
 		return array(
-			'\phpbb\db\migration\data\v310\rc6'
+			'\ciakval\vipposts\migrations\release_0_1_0'
 		);
 	}
 
 	public function update_data()
 	{
 		return array(
-			array('config_text.add', array('vipposts_text', 'text'),
+			array('config_text.add', array('vipposts_text', 'text')),
 		);
 	}
 }
