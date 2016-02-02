@@ -15,6 +15,7 @@ if (!defined('IN_PHPBB'))
 
 $lang = array_merge($lang, array(
 	'POSTING_BUTTON'	=> 'Mark post as VIP',
+	'VIPPOSTS_VIPBUTTON'			=> 'Post as VIP',
 	'ACP_VIPPOSTS_TITLE'			=> 'VIP Posts Module',
 	'ACP_VIPPOSTS'					=> 'Settings',
 	'ACP_VIPPOSTS_HIGHLIGHT'		=> 'Highlight VIP posts?',

@@ -73,6 +73,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_modify_post_row'	=> 'push_highlight',
 			'core.search_modify_tpl_ary'		=> 'search_set_highlight',
 			'core.search_modify_rowset'			=> 'set_highlight',
+			'core.modify_posting_parameters'	=> 'button_reset_submit_value',
 		);
 	}
 
@@ -152,6 +153,11 @@ class listener implements EventSubscriberInterface
 	public function posting($event)
 	{
 		$post_vip = $this->request->variable('vippost', false);
+
+		if ($this->request->variable('vip-button', '') != '')
+		{
+			$post_vip = true;
+		}
 
 		$sql_data = $event['sql_data'];
 		$sql_data[POSTS_TABLE]['sql'] = array_merge($sql_data[POSTS_TABLE]['sql'], array(
@@ -240,6 +246,20 @@ class listener implements EventSubscriberInterface
 			$tpl_ary = $event['tpl_ary'];
 			$tpl_ary['POST_VIP'] = $event['row']['post_vip'];
 			$event['tpl_ary'] = $tpl_ary;
+		}
+	}
+
+	/**
+	 * Reset the 'submit' value to true, if the 'Post as VIP' button was pushed
+	 *
+	 * @param \phpbb\event\data $event	viewtopic: core.modify_posting_parameters
+	 */
+	public function button_reset_submit_value($event)
+	{
+		if ($this->request->variable('vip-button', '') != '')
+		{
+			$submit = true;
+			$event['submit'] = $submit;
 		}
 	}
 }
