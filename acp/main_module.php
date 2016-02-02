@@ -27,10 +27,11 @@ class main_module
 
 	public function main($id, $mode)
 	{
-		global $request, $user, $config, $template;
+		global $request, $user, $config, $template, $db, $table_prefix;
 
 		$this->tpl_name = 'acp_body';	// Set template name
 		$this->page_title = $user->lang('ACP_VIPPOSTS_TITLE');	// Set page title
+		$config_text = new \phpbb\config\db_text($db, $table_prefix . 'config_text');
 
 		add_form_key('ciakval/vipposts');
 
@@ -44,22 +45,18 @@ class main_module
 
 			// Configuration for highlighting only, others may be added here
 			$config->set('vipposts_highlight', $request->variable('vipposts_highlight', 0));
-			$db->sql_query("UPDATE ". CONFIG_TEXT_TABLE ."
-			SET config_value = \"".$request->variable('vipposts_text', '', true)."\"
-			WHERE config_name = 'vipposts_text'");
+			$config->set('vipposts_substitute', $request->variable('vipposts_substitute', 0));
+			$config_text->set('vipposts_text', $request->variable('vipposts_text', 'This is VIP post.'));
 			// @more	Save configuration values from the form
 
 			trigger_error($user->lang('ACP_VIPPOSTS_SETTINGS_SAVED') . adm_back_link($this->u_action));
 		}
 
-		$query = $db->sql_query("SELECT config_value FROM ". CONFIG_TEXT_TABLE ."
-WHERE config_name = 'vipposts_text'");
-		$ris = $db->sql_fetchrow($query);
-		$text = $ris['config_value'];
 		$template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
 			'S_HIGHLIGHT'	=> $config['vipposts_highlight'],
-			'S_TEXT'	=> $text,
+			'S_SUBSTITUTE'	=> $config['vipposts_substitute'],
+			'S_TEXT'		=> $config_text->get('vipposts_text'),
 			// @more	Specify template variables corresponding to current settings
 		));
 	}

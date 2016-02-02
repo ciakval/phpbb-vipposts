@@ -23,6 +23,7 @@ class release_0_1_1 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
+			array('config.add', array('vipposts_substitute', false)),
 			array('config_text.add', array('vipposts_text', 'text')),
 		);
 	}

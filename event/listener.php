@@ -24,8 +24,8 @@ class listener implements EventSubscriberInterface
 	protected $template;
 	/** @var \phpbb\config\config */
 	protected $config;
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
+	/** @var \phpbb\config\db_text config_text */
+	protected $config_text;
 	/**
 	 * Constructor
 	 *
@@ -33,6 +33,8 @@ class listener implements EventSubscriberInterface
 	 * @param \phpbb\user				$user		User object
 	 * @param \phpbb\request\request	$request	Request object 
 	 * @param \phpbb\template\template	$template	Page template
+	 * @param \phpbb\config\config		$config		Config object
+	 * @param \phpbb\config\db_text		$config_text	Text config object
 	 * @return \ciakval\vipposts\event\listener
 	 * @access public
 	 */
@@ -42,14 +44,15 @@ class listener implements EventSubscriberInterface
 		\phpbb\request\request $request,
 		\phpbb\template\template $template,
 		\phpbb\config\config $config,
-		\phpbb\db\driver\driver_interface $db)
+		\phpbb\config\db_text $config_text
+	)
 	{
 		$this->auth = $auth;
 		$this->user = $user;
 		$this->request = $request;
 		$this->template = $template;
 		$this->config = $config;
-		$this->db = $db;
+		$this->config_text = $config_text;
 	}
 
 	/**
@@ -98,9 +101,11 @@ class listener implements EventSubscriberInterface
 	{
 		if ($event['mode'] == 'post')
 		{
-			if ($this->auth->acl_get('!u_vip_view'))
-			{
-				$event['where_sql'] = 'p.post_vip = 0 AND ';
+			if ($this->config['vipposts_substitute'] == false) {
+				if ($this->auth->acl_get('!u_vip_view'))
+				{
+					$event['where_sql'] = 'p.post_vip = 0 AND ';
+				}
 			}
 		}
 
@@ -175,7 +180,19 @@ class listener implements EventSubscriberInterface
 	public function add_highlight($event)
 	{
 		$rowset = $event['rowset_data'];
+
+		// Substitute the post text for non-VIP users
+		if($this->config['vipposts_substitute'])
+		{
+			if($event['row']['post_vip'] && $this->auth->acl_get('!u_vip_view'))
+			{
+				$rowset['post_text'] = $this->config_text->get('vipposts_text');
+			}
+		}
+
+		// Include the post's VIP information in the rowset
 		$rowset['post_vip'] = $event['row']['post_vip'];
+
 		$event['rowset_data'] = $rowset;
 	}
 
@@ -190,17 +207,24 @@ class listener implements EventSubscriberInterface
 		$post_row['POST_VIP'] = $event['row']['post_vip'];
 
 		//post text
+		/* Replaced with config_text
 		$query = $this->db->sql_query("SELECT config_value
 		FROM ". CONFIG_TEXT_TABLE ."
 		WHERE config_name = 'vipposts_text'");
 		$ris = $this->db->sql_fetchrow($query);
 		$text = $ris['config_value'];
+		 */
+
+		/* Commented out, since this is done in add_highlight now
+		$text = $this->config_text['vipposts_text'];
+
 		$message = $post_row['MESSAGE'];
 		if($event['row']['post_vip'])
 			{
 			$message = $text;
 			}
 		$post_row['MESSAGE'] = $message;
+		 */
 		$event['post_row'] = $post_row;
 	}
 
