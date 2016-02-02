@@ -256,7 +256,8 @@ class listener implements EventSubscriberInterface
 	 */
 	public function button_reset_submit_value($event)
 	{
-		if ($this->request->variable('vip-button', '') != '')
+		if ($this->request->variable('vip-button', '') != '' &&
+			$this->auth->get_acl('u_vip_post'))
 		{
 			$submit = true;
 			$event['submit'] = $submit;
