@@ -14,12 +14,18 @@
 				<input type="radio" class="radio" name="vipposts_highlight" value="0" <!-- IF not S_HIGHLIGHT -->checked="checked"<!-- ENDIF -->/> {L_NO}
 			</dd>
 
+			<br />
+			<hr />
+
+			<h2>VIP post substitution</h2>
+			<p>This setting configures displaying VIP posts to non-VIP users.</p>
+
 			<!-- CONFIG vipposts_substitute -->
 			<dt><label for="vipposts_substitute">{L_ACP_VIPPOSTS_SUBSTITUTE}</label></dt>
 			<dd>
-				<input type="radio" class="radio" name="vipposts_substitute" value="1" <!-- IF S_SUBSTITUTE -->checked="checked"<!-- ENDIF -->/> {L_YES}
+				<input type="radio" class="radio" name="vipposts_substitute" value="1" <!-- IF S_SUBSTITUTE -->checked="checked"<!-- ENDIF -->/> See substituted text
 				&nbsp;
-				<input type="radio" class="radio" name="vipposts_substitute" value="0" <!-- IF not S_SUBSTITUTE -->checked="checked"<!-- ENDIF -->/> {L_NO}
+				<input type="radio" class="radio" name="vipposts_substitute" value="0" <!-- IF not S_SUBSTITUTE -->checked="checked"<!-- ENDIF -->/> Not see the post at all
 			</dd>
 
 			<!-- CONFIG vipposts_text -->
