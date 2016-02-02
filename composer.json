@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "VIP Posts Extension for phpBB 3.1",
 	"homepage": "https://github.com/ciakval/phpbb-vipposts",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"time": "2016-02-02",
 	"license": "GPL-2.0",
 	"authors": [
