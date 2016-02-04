@@ -193,6 +193,7 @@ class listener implements EventSubscriberInterface
 			if($event['row']['post_vip'] && $this->auth->acl_get('!u_vip_view'))
 			{
 				$rowset['post_text'] = $this->config_text->get('vipposts_text');
+				$rowset['post_attachment'] = 0;
 			}
 		}
 
@@ -211,6 +212,14 @@ class listener implements EventSubscriberInterface
 	{
 		$post_row = $event['post_row'];
 		$post_row['POST_VIP'] = $event['row']['post_vip'];
+
+		if ($this->config['vipposts_substitute'])
+		{
+			if ($event['row']['post_vip'] && $this->auth->acl_get('!u_vip_view'))
+			{
+				$post_row['S_HAS_ATTACHMENTS'] = false;
+			}
+		}
 
 		//post text
 		/* Replaced with config_text
@@ -257,7 +266,7 @@ class listener implements EventSubscriberInterface
 	public function button_reset_submit_value($event)
 	{
 		if ($this->request->variable('vip-button', '') != '' &&
-			$this->auth->get_acl('u_vip_post'))
+			$this->auth->acl_get('u_vip_post'))
 		{
 			$submit = true;
 			$event['submit'] = $submit;
