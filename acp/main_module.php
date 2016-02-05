@@ -46,7 +46,7 @@ class main_module
 			// Configuration for highlighting only, others may be added here
 			$config->set('vipposts_highlight', $request->variable('vipposts_highlight', 0));
 			$config->set('vipposts_substitute', $request->variable('vipposts_substitute', 0));
-			$config_text->set('vipposts_text', $request->variable('vipposts_text', 'This is VIP post.'));
+			$config_text->set('vipposts_text', $request->variable('vipposts_text', 'This is VIP post.', true));
 			// @more	Save configuration values from the form
 
 			trigger_error($user->lang('ACP_VIPPOSTS_SETTINGS_SAVED') . adm_back_link($this->u_action));
